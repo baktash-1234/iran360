@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ایران 360 - تجربه سفر مجازی به ایران</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fontiran.com/css/fontiran.css" rel="stylesheet">
+    <style>
+        /* Reset و تنظیمات پایه */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'IRANSans', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* هدر */
+        header {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        header:hover {
+            background: rgba(0, 0, 0, 0.95);
+        }
+        
+        .logo {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-left: 10px;
+            color: #ff7b00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-right: 2rem;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        nav ul li a:hover {
+            color: #ff7b00;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #ff7b00;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* بخش Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1794&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ff7b00;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #ff7b00;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: #ff7b00;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* بخش معرفی */
+        .intro {
+            padding: 5rem 10%;
+            background: #fff;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: #ff7b00;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .intro-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .intro-text {
+            flex: 1;
+        }
+        
+        .intro-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #222;
+        }
+        
+        .intro-text p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .intro-image {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s;
+        }
+        
+        .intro-image:hover {
+            transform: scale(1.03) rotate(1deg);
+        }
+        
+        .intro-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* بخش تورهای مجازی */
+        .vr-tours {
+            padding: 5rem 10%;
+            background: #f5f5f5;
+        }
+        
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tour-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tour-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .tour-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .tour-card:hover .tour-image img {
+            transform: scale(1.1);
+        }
+        
+        .tour-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff7b00;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tour-content {
+            padding: 1.5rem;
+        }
+        
+        .tour-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tour-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .tour-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* بخش نقشه */
+        .map-section {
+            padding: 5rem 10%;
+            background: #fff;
+        }
+        
+        #iran-map {
+            height: 500px;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 3rem;
+        }
+        
+        /* فوتر */
+        footer {
+            background: #222;
+            color: #fff;
+            padding: 5rem 10% 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background: #ff7b00;
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-column p {
+            color: #bbb;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff7b00;
+            padding-right: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            color: #fff;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #ff7b00;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* رسپانسیو */
+        @media (max-width: 992px) {
+            .intro-content {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 3%;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- هدر -->
+    <header>
+        <a href="#" class="logo">ایران 360 <i class="fas fa-vr-cardboard"></i></a>
+        <nav>
+            <ul>
+                <li><a href="#">خانه</a></li>
+                <li><a href="#tours">تورهای مجازی</a></li>
+                <li><a href="#map">نقشه گردشگری</a></li>
+                <li><a href="#about">درباره ما</a></li>
+                <li><a href="#contact">تماس با ما</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- بخش Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ایران را مثل nunca antes دیده‌اید</h1>
+            <p>با فناوری واقعیت مجازی، به عمق زیبایی‌های ایران سفر کنید. از کویر لوت تا جنگل‌های شمال، همه را در 360 درجه تجربه کنید.</p>
+            <a href="#tours" class="btn">شروع تور مجازی</a>
+        </div>
+    </section>
+
+    <!-- بخش معرفی -->
+    <section class="intro" id="about">
+        <div class="section-title">
+            <h2>ایران از نگاهی دیگر</h2>
+        </div>
+        <div class="intro-content">
+            <div class="intro-text">
+                <h3>کشف ناشناخته‌های ایران با فناوری VR</h3>
+                <p>سایت ایران 360 با استفاده از پیشرفته‌ترین تکنولوژی‌های واقعیت مجازی، این امکان را فراهم کرده است که بدون خارج شدن از خانه، زیباترین جاذبه‌های گردشگری ایران را کشف کنید.</p>
+                <p>ما با تیمی از عکاسان حرفه‌ای و متخصصان VR، بیش از 100 نقطه دیدنی ایران را به صورت 360 درجه و با کیفیت 8K ثبت کرده‌ایم تا شما تجربه‌ای نزدیک به واقعیت داشته باشید.</p>
+                <a href="#tours" class="btn">مشاهده تورها</a>
+            </div>
+            <div class="intro-image">
+                <img src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="نمونه تور مجازی">
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش تورهای مجازی -->
+    <section class="vr-tours" id="tours">
+        <div class="section-title">
+            <h2>تورهای مجازی ما</h2>
+        </div>
+        <div class="tours-grid">
+            <!-- تور 1 -->
+            <div class="tour-card">
+                <div class="tour-image">
+                    <img src="https://images.unsplash.com/photo-1560843736-8b2f7a1a1b8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="میدان نقش جهان">
+                    <span class="tour-badge">پرطرفدار</span>
+                </div>
+                <div class="tour-content">
+                    <h3>میدان نقش جهان اصفهان</h3>
+                    <p>تجربه قدم زدن در یکی از بزرگترین میدان‌های جهان با معماری خیره‌کننده صفوی</p>
+                    <div class="tour-stats">
+                        <span><i class="fas fa-clock"></i> 45 دقیقه</span>
+                        <span><i class="fas fa-street-view"></i> 360°</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تور 2 -->
+            <div class="tour-card">
+                <div class="tour-image">
+                    <img src="https://images.unsplash.com/photo-1581055442244-6e13c1205c7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="تخت جمشید">
+                    <span class="tour-badge">تاریخی</span>
+                </div>
+                <div class="tour-content">
+                    <h3>تخت جمشید شیراز</h3>
+                    <p>بازدید از شکوه امپراتوری هخامنشیان با جزئیاتی که در بازدید واقعی نمی‌بینید</p>
+                    <div class="tour-stats">
+                        <span><i class="fas fa-clock"></i> 1 ساعت</span>
+                        <span><i class="fas fa-street-view"></i> 360°</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تور 3 -->
+            <div class="tour-card">
+                <div class="tour-image">
+                    <img src="https://images.unsplash.com/photo-1581852017103-68e8115e1e47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="کلیسای وانک">
+                    <span class="tour-badge">ویژه</span>
+                </div>
+                <div class="tour-content">
+                    <h3>کلیسای وانک اصفهان</h3>
+                    <p>کشف هنر بی‌نظیر نقاشی‌های دیواری و معماری ارمنی‌های ایران</p>
+                    <div class="tour-stats">
+                        <span><i class="fas fa-clock"></i> 30 دقیقه</span>
+                        <span><i class="fas fa-street-view"></i> 360°</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش نقشه -->
+    <section class="map-section" id="map">
+        <div class="section-title">
+            <h2>نقشه گردشگری ایران</h2>
+        </div>
+        <div id="iran-map">
+            <!-- نقشه با جاوااسکریپت ساخته خواهد شد -->
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>درباره ایران 360</h3>
+                <p>ما با هدف معرفی جاذبه‌های بی‌نظیر ایران با استفاده از تکنولوژی روز دنیا تأسیس شده‌ایم تا تجربه‌ای منحصر به فرد از سفر مجازی را برای شما فراهم کنیم.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>لینک‌های سریع</h3>
+                <ul class="footer-links">
+                    <li><a href="#">خانه</a></li>
+                    <li><a href="#tours">تورهای مجازی</a></li>
+                    <li><a href="#map">نقشه گردشگری</a></li>
+                    <li><a href="#about">درباره ما</a></li>
+                    <li><a href="#contact">تماس با ما</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>تماس با ما</h3>
+                <p><i class="fas fa-map-marker-alt"></i> تهران، خیابان ولیعصر، پلاک 100</p>
+                <p><i class="fas fa-phone"></i> 021-12345678</p>
+                <p><i class="fas fa-envelope"></i> info@iran360.ir</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>تمامی حقوق برای سایت ایران 360 محفوظ است © 2023</p>
+        </div>
+    </footer>
+
+    <!-- اسکریپت‌ها -->
+    <script>
+        // انیمیشن اسکرول
+        document.addEventListener('DOMContentLoaded', function() {
+            // افکت اسکرول برای بخش‌ها
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'all 0.6s ease-out';
+                observer.observe(section);
+            });
+            
+            // تغییر شفافیت هدر هنگام اسکرول
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(0, 0, 0, 0.95)';
+                } else {
+                    header.style.background = 'rgba(0, 0, 0, 0.85)';
+                }
+            });
+            
+            // شبیه‌سازی نقشه (در پروژه واقعی از Leaflet.js استفاده کنید)
+            const iranMap = document.getElementById('iran-map');
+            iranMap.innerHTML = '<img src="https://mapsvg.com/static/maps/geo-calibrated/iran-high.svg" alt="نقشه ایران" style="width:100%;height:100%;object-fit:cover;">';
+            
+            // افزودن رویداد کلیک برای کارت‌های تور
+            const tourCards = document.querySelectorAll('.tour-card');
+            tourCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    alert('در نسخه کامل، این کارت شما را به تور مجازی هدایت می‌کند!');
+                });
+            });
+        });
+    </script>
+</body>
+</html>(
